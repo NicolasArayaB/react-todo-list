@@ -4,19 +4,26 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { useState } from 'react';
 
 const TodoList = () => {
+    let tasksArr = ["1", "2", "3"];
+
     const [input, setInput] = useState('');
-    let tasksArr = ["t1", "t2"];
+    const [tasksList, setTasks] = useState(tasksArr)
     
-    const handleTask = newTask => tasksArr.push(newTask);
+    const handleTask = newTask => {
+        setTasks(tasksArr.push(newTask));
+        console.log(tasksList);
+        setInput("");
+    }
 
     return (
     <Container>
         <h1>Todos</h1>
-        <Form action="#" onSubmit={() => handleTask(document.getElementById("newtask").value) }>
-            <input className="form-control" value={input} onInput={e => setInput(e.target.value)} id="newtask" type="text" placeholder="What needs to be done?" autoComplete="off" />
+        <Form onSubmit={() => handleTask(document.getElementById("newtask").value) }>
+            <input className="form-control" value={input} onInput={e => setInput(e.target.value)} id="newtask" type="text" 
+                placeholder="What needs to be done?" autoComplete="off" />
         </Form>
         <ListGroup as="ul">
-            {tasksArr.map((task) => <li>{task}</li>)}
+            {tasksArr ? tasksArr.map((task) => <li>{task}</li>) : <li>"No tasks, add a task"</li>}
         </ListGroup>
     </Container>
     )
