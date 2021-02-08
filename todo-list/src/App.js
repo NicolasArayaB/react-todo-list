@@ -29,7 +29,7 @@ const TodoList = () => {
     <Container>
         <h1>todos</h1>
         <Form onSubmit={addItem} >
-            <input className="form-control" value={input} onInput={e => setInput(e.target.value)} id="newtask" type="text"
+            <input className="form-control" value={input} onInput={e => setInput(e.target.value)} type="text"
                 placeholder="What needs to be done?" autoComplete="off" autoFocus  />
         </Form>
             <ListGroup>
@@ -40,6 +40,8 @@ const TodoList = () => {
                     </ListGroup.Item>) : ""}
                 {tasksList.length === 0 ? <ListGroup.Item>"No tasks, add a task"</ListGroup.Item> : 
                     <ListGroup.Item disabled>{tasksList.length} item left</ListGroup.Item>}
+                    <ListGroup.Item className="decor1" />
+                    <ListGroup.Item className="decor2" />
             </ListGroup>
     </Container>
     )

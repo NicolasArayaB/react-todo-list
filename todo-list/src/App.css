@@ -1,27 +1,60 @@
 body {
     background-color: rgb(243, 242, 242) !important;
-}
-
-input {
-    padding-left: 40px !important;
-}
-.list-group-item {
-    padding-left: 40px !important;
-}
-
-.disabled {
-    padding: 3% !important;
-}
-
-.input-group-prepend {
-    display: inline !important;
-    padding-left: 40px !important;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #737679 !important;
 }
 
 h1 {
-    color: rgb(201, 177, 177);
+    color: rgb(211, 194, 194);
     text-align: center;
     font-size: 5rem !important;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-weight: lighter !important;
+}
+
+input {
+    padding-left: 40px !important;
+    height: calc(3em + .75rem + 2px) !important;
+}
+
+.form-control:focus{
+    border-color: rgba(0,0,0,.125) !important;
+    box-shadow: none !important;
+}
+
+.list-group-item.disabled {
+    padding-left: 15px !important;
+    font-size: small;
+    color: #bdc3c8 !important;
+}
+
+.list-group-item {
+    padding-left: 40px !important;
+}
+
+.input-group-prepend {
+    display: inline !important;
+    padding-left: 0px !important;
+}
+
+span {
+    color: rgb(216, 187, 187);
+}
+span:hover{
+    color: rgb(199, 156, 156);
+}
+
+
+.decor1 {
+    margin: auto;
+    width: 99%;
+    height: 5px;
+    padding: 0px !important;
+}
+
+.decor2 {
+    margin: auto;
+    width: 98%;
+    height: 4px;
+    padding: 0px !important;
 }
