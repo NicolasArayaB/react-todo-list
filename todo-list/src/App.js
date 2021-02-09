@@ -6,8 +6,8 @@ import CloseButton from './components/clsBtn.js'
 
 const TodoList = () => {
     const [input, setInput] = useState('');
-    const [tasksList, setTasks] = useState('')
-    const [showButton, setButton] = useState(false);
+    const [tasksList, setTasks] = useState([])
+    const [showButton, setShowButton] = useState(false);
     
     const addItem = event => {
         event.preventDefault();
@@ -34,8 +34,8 @@ const TodoList = () => {
         </Form>
             <ListGroup>
                 {tasksList.length !== 0 ? tasksList.map((task, index) => 
-                    <ListGroup.Item key={index} onMouseEnter={() => setButton(true)} onMouseLeave={() => setButton(false)}>
-                        {showButton ? <CloseButton remove={removeTask} id={index} /> : ""}
+                    <ListGroup.Item key={index} onMouseEnter={() => setShowButton(() => [index, true])} onMouseLeave={() => setShowButton(() => [index, false])}>
+                        {showButton[1] && showButton[0] === index ? <CloseButton remove={removeTask} id={index} /> : ""}
                         {task.name}
                     </ListGroup.Item>) : ""}
                 {tasksList.length === 0 ? <ListGroup.Item>"No tasks, add a task"</ListGroup.Item> : 
