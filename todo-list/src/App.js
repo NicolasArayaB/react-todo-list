@@ -1,8 +1,9 @@
-import { Container, Form, ListGroup } from 'react-bootstrap';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import CloseButton from './components/clsBtn.js'
+import { Container, Form, ListGroup } from 'react-bootstrap';
+import postData from './api/post'
 
 const TodoList = () => {
     const [input, setInput] = useState('');
@@ -24,14 +25,15 @@ const TodoList = () => {
             setTasks(arr)
         }
     }
-
+    useEffect(() => <postData />, []);
+    
     return (
-    <Container>
-        <h1>todos</h1>
-        <Form onSubmit={addItem} >
-            <input className="form-control" value={input} onInput={e => setInput(e.target.value)} type="text"
-                placeholder="What needs to be done?" autoComplete="off" autoFocus  />
-        </Form>
+        <Container>
+            <h1>todos</h1>
+            <Form onSubmit={addItem} >
+                <input className="form-control" value={input} onInput={e => setInput(e.target.value)} type="text"
+                    placeholder="What needs to be done?" autoComplete="off" autoFocus  />
+            </Form>
             <ListGroup>
                 {tasksList.length !== 0 ? tasksList.map((task, index) => 
                     <ListGroup.Item key={index} onMouseEnter={() => setShowButton(() => [index, true])} onMouseLeave={() => setShowButton(() => [index, false])}>
@@ -43,7 +45,7 @@ const TodoList = () => {
                     <ListGroup.Item className="decor1" />
                     <ListGroup.Item className="decor2" />
             </ListGroup>
-    </Container>
+        </Container>
     )
 }
 export default TodoList;

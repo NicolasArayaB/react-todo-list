@@ -40,8 +40,13 @@ input {
 span {
     color: rgb(216, 187, 187);
 }
-span:hover{
+
+span:hover {
     color: rgb(199, 156, 156);
+}
+
+.remove-btn {
+    margin-top: 10px;
 }
 
 .decor1 {
