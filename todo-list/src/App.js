@@ -13,7 +13,6 @@ const TodoList = () => {
     const addItem = event => {
         event.preventDefault();
         setTasks([...tasksList, {label: input, done: false}]);
-        console.log(tasksList)
         setInput('');
     }
 
@@ -36,14 +35,16 @@ const TodoList = () => {
             </Form>
             <ListGroup>
                 {tasksList.length !== 0 ? tasksList.map((task, index) => 
-                    <ListGroup.Item key={index} onMouseEnter={() => setShowButton(() => [index, true])} onMouseLeave={() => setShowButton(() => [index, false])}>
-                        {showButton[1] && showButton[0] === index ? <CloseButton remove={removeTask} id={index} /> : ""}
-                        {task.label}
+                    <ListGroup.Item key={index} onMouseEnter={() => setShowButton(() =>
+                        [index, true])} onMouseLeave={() =>
+                            setShowButton(() => [index, false])}>
+                    {showButton[1] && showButton[0] === index ? <CloseButton remove={removeTask} id={index} /> : ""}
+                    {task.label}
                     </ListGroup.Item>) : ""}
                 {tasksList.length === 0 ? <ListGroup.Item>"No tasks, add a task"</ListGroup.Item> : 
                     <ListGroup.Item disabled>{tasksList.length} item left</ListGroup.Item>}
-                    <ListGroup.Item className="decor1" />
-                    <ListGroup.Item className="decor2" />
+                <ListGroup.Item className="decor1" />
+                <ListGroup.Item className="decor2" />
             </ListGroup>
         </Container>
     )
