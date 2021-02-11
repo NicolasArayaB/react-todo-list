@@ -25,7 +25,7 @@ const TodoList = () => {
             setTasks(arr)
         }
     }
-    useEffect(() => <postData />, []);
+    <postData />
     
     return (
         <Container>
