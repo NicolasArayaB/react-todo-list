@@ -11,8 +11,7 @@ export let fetchData = async () => {
 
     const json = await request.json();
     const data = json;
-    console.log(`Get ${data}`)
-
-    return data
+    
+    return data[0]
 }
 export default fetchData()

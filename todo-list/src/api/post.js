@@ -7,7 +7,7 @@ export let postData = async () => {
     }
     
     const request = await fetch(
-        'https://assets.breatheco.de/apis/fake/todos/user/nicolas', settings
+        "https://assets.breatheco.de/apis/fake/todos/user/nicolas", settings
     )
     const data = await request.json();    
     let success = {result: "ok"}

@@ -1,9 +1,9 @@
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import CloseButton from './components/clsBtn.js'
 import { Container, Form, ListGroup } from 'react-bootstrap';
-import postData from './api/post'
+import fetchData from './api/get'
 
 const TodoList = () => {
     const [input, setInput] = useState('');
@@ -12,7 +12,8 @@ const TodoList = () => {
     
     const addItem = event => {
         event.preventDefault();
-        setTasks([...tasksList, {name: input}]);
+        setTasks([...tasksList, {label: input, done: false}]);
+        console.log(tasksList)
         setInput('');
     }
 
@@ -22,10 +23,9 @@ const TodoList = () => {
 
         if(index !== -1){
             arr.splice(index, 1);
-            setTasks(arr)
+            setTasks(arr);
         }
     }
-    <postData />
     
     return (
         <Container>
@@ -38,7 +38,7 @@ const TodoList = () => {
                 {tasksList.length !== 0 ? tasksList.map((task, index) => 
                     <ListGroup.Item key={index} onMouseEnter={() => setShowButton(() => [index, true])} onMouseLeave={() => setShowButton(() => [index, false])}>
                         {showButton[1] && showButton[0] === index ? <CloseButton remove={removeTask} id={index} /> : ""}
-                        {task.name}
+                        {task.label}
                     </ListGroup.Item>) : ""}
                 {tasksList.length === 0 ? <ListGroup.Item>"No tasks, add a task"</ListGroup.Item> : 
                     <ListGroup.Item disabled>{tasksList.length} item left</ListGroup.Item>}
