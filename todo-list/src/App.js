@@ -1,21 +1,22 @@
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useState, useEffect } from 'react';
-import CloseButton from './components/clsBtn.js'
-import { Container, Form, ListGroup, Button, Row, Col } from 'react-bootstrap';
+import MyList from './components/listGroup'
+import { Container, Form, Button } from 'react-bootstrap';
 
 const TodoList = () => {
     const [input, setInput] = useState('');
     const [tasksList, setTasksList] = useState([])
-    const [showButton, setShowButton] = useState(false);
+
 
     // Add Items using Input    
     const addItem = event => {
         event.preventDefault();
+        console.log(tasksList, "pre")
         setTasksList([...tasksList, {label: input, done: false}]);
         setInput('');
         updateTaskUser()
-        
+        console.log(tasksList, "post")
     }
 
     // Remove task from TasksList
@@ -32,29 +33,27 @@ const TodoList = () => {
     }
 
     // Create user
-    const createUser = ()=>{
-        fetch('https://assets.breatheco.de/apis/fake/todos/user/nicolas',{
+    const createUser =  async()=>{
+        const request = await fetch('https://assets.breatheco.de/apis/fake/todos/user/nicolas',
+        {
             method:"POST",
             body: JSON.stringify([]),
-            headers:{
-                "Content-Type": "application/json"
-            }
-        }).then( (response)=>{
-                console.log('New user response',response)
+            headers:{"Content-Type": "application/json"}
         })
+        
+        const json = await request.json();
+        const data = json;
+        console.log('New user response',data)
     }
 
     // Fetch existing data
-    const fetchData = async () => {
+    const fetchData = async() => {
         const settings = {
             method:"GET",
             headers:{ "Content-Type":"aplication/json" }
         }
 
-        const request = await fetch(
-            `https://assets.breatheco.de/apis/fake/todos/user/nicolas`, settings
-            );
-
+        const request = await fetch(`https://assets.breatheco.de/apis/fake/todos/user/nicolas`, settings);
         const json = await request.json();
         const data = json;
 
@@ -63,28 +62,26 @@ const TodoList = () => {
     }
 
     // Update tasksList    
-    const updateTaskUser = () => {
-        fetch('https://assets.breatheco.de/apis/fake/todos/user/nicolas',{
+    const updateTaskUser = async() => {
+        const settings = {
             method:"PUT",
             body: JSON.stringify(tasksList),
-            headers:{
-                "Content-Type": "application/json"
-            }
-        }).then( (response) => {
-                console.log("update response",response)
-        })
+            headers:{ "Content-Type": "application/json" }
+        }
+
+        const request = await fetch('https://assets.breatheco.de/apis/fake/todos/user/nicolas', settings);
+        const json = await request.json();
+        const data = json;
+        console.log("update response",data);
     }
 
-    const deleteAll = () => {
-        fetch('https://assets.breatheco.de/apis/fake/todos/user/nicolas',{
-            method:"DELETE",
-        }).then( (response)=>{
-                console.log("delete response",response)
-        })
-    }
-    const deleteUser = () => {
-        deleteAll();
-        createUser();
+    // Delete all Tasks and user
+    const deleteAll = async () => {
+        const request = await fetch('https://assets.breatheco.de/apis/fake/todos/user/nicolas', {method:"DELETE"})
+        const json = await request.json();
+        const data = json
+                console.log("delete response", data)
+        
     }
 
     useEffect(() => {
@@ -95,29 +92,14 @@ const TodoList = () => {
     return (
         <Container>
             <h1>todos</h1>
+            <span>{JSON.stringify(tasksList)}</span>
             <Form onSubmit={addItem} >
                 <input className="form-control" value={input} onInput={e => setInput(e.target.value)} type="text"
                     placeholder="What needs to be done?" autoComplete="off" autoFocus  />
             </Form>
-            <ListGroup>
-                {tasksList.length !== 0 ? tasksList.map((task, index) =>
-                    <ListGroup.Item key={index} value={task.label} onMouseEnter={() => setShowButton(() =>
-                        [index, true])} onMouseLeave={() =>
-                            setShowButton(() => [index, false])}>
-                    {showButton[1] && showButton[0] === index ? <CloseButton remove={removeTask} id={index} /> : ""}
-                    {task.label}
-                    </ListGroup.Item>) : ""}
-                {tasksList.length === 0 ? <ListGroup.Item>"No tasks, add a task"</ListGroup.Item> :
-                    <ListGroup.Item disabled>{tasksList.length} item left</ListGroup.Item>}
-                <ListGroup.Item className="decor1" />
-                <ListGroup.Item className="decor2" />
-            </ListGroup>
-            <Row>
-                <Col>
-                    <Button className="deleteAll" variant="secondary" onClick={() => deleteUser()}>Remove All</Button>
-                </Col>
-            </Row>
-            
+            <MyList tasksList={tasksList} setTasksList={setTasksList} removeTask={removeTask} />
+            <Button className="deleteAll" variant="secondary" onClick={() => deleteAll()}>Remove All</Button>
+
         </Container>
     )
 }
