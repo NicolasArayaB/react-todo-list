@@ -8,15 +8,14 @@ const TodoList = () => {
     const [input, setInput] = useState('');
     const [tasksList, setTasksList] = useState([])
 
-
     // Add Items using Input    
     const addItem = event => {
         event.preventDefault();
-        console.log(tasksList, "pre")
-        setTasksList([...tasksList, {label: input, done: false}]);
-        setInput('');
-        updateTaskUser()
-        console.log(tasksList, "post")
+        console.log(tasksList, "pre") 
+            setTasksList([...tasksList, {label: input, done: false}]);
+            setInput('');
+            updateTaskUser()
+            console.log(tasksList, "post")
     }
 
     // Remove task from TasksList
@@ -58,7 +57,6 @@ const TodoList = () => {
         const data = json;
 
         setTasksList(data)
-
     }
 
     // Update tasksList    
@@ -80,8 +78,9 @@ const TodoList = () => {
         const request = await fetch('https://assets.breatheco.de/apis/fake/todos/user/nicolas', {method:"DELETE"})
         const json = await request.json();
         const data = json
-                console.log("delete response", data)
-        
+        createUser()
+        fetchData()
+        console.log("delete response", data)
     }
 
     useEffect(() => {
@@ -99,7 +98,6 @@ const TodoList = () => {
             </Form>
             <MyList tasksList={tasksList} setTasksList={setTasksList} removeTask={removeTask} />
             <Button className="deleteAll" variant="secondary" onClick={() => deleteAll()}>Remove All</Button>
-
         </Container>
     )
 }
