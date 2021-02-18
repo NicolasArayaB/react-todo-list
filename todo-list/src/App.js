@@ -11,11 +11,10 @@ const TodoList = () => {
     // Add Items using Input    
     const addItem = event => {
         event.preventDefault();
-        console.log(tasksList, "pre") 
-            setTasksList([...tasksList, {label: input, done: false}]);
-            setInput('');
-            updateTaskUser()
-            console.log(tasksList, "post")
+        let newTaskList = [...tasksList, {label: input, done: false}]
+        setTasksList(() => newTaskList);
+        setInput('');
+        updateTaskUser()
     }
 
     // Remove task from TasksList
@@ -49,7 +48,7 @@ const TodoList = () => {
     const fetchData = async() => {
         const settings = {
             method:"GET",
-            headers:{ "Content-Type":"aplication/json" }
+            headers:{ "Content-Type":"application/json" }
         }
 
         const request = await fetch(`https://assets.breatheco.de/apis/fake/todos/user/nicolas`, settings);
