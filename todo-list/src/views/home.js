@@ -1,3 +1,4 @@
+import React from "react"
 import { Container, Row, Col, Form } from "react-bootstrap"
 
 export const Home = () => {
@@ -20,5 +21,5 @@ export const Home = () => {
             </Row>
             
         </Container>
-    )
-}
+    );
+};
