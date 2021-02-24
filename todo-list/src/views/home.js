@@ -1,7 +1,11 @@
 import React from "react"
 import { Container, Row, Col, Form } from "react-bootstrap"
 
-export const Home = () => {
+const Home = () => {
+    const mySubmit = (e) => {
+        e.preventDefault();
+        console.log(document.getElementById("userForm").textContent)
+    };
     return (
         <Container>
             <Row>
@@ -14,7 +18,7 @@ export const Home = () => {
                 <Col>
                     <Form>
                         <Form.Group >
-                            <Form.Control id="userForm" className="mb-2 mr-sm-2" placeholder="User Name" onSubmit={() => console.log(document.getElementById("userForm").textContent)} />
+                            <Form.Control id="userForm" className="mb-2 mr-sm-2" placeholder="User Name" onSubmit={() => mySubmit()} />
                         </Form.Group>
                     </Form>
                 </Col>
@@ -23,3 +27,5 @@ export const Home = () => {
         </Container>
     );
 };
+
+export default Home;
