@@ -1,29 +1,23 @@
 import React from "react"
-import { Container, Row, Col, Form } from "react-bootstrap"
+import { Container, Row, Col, Button } from "react-bootstrap"
+import { Link } from 'react-router-dom';
 
 const Home = () => {
-    const mySubmit = (e) => {
-        e.preventDefault();
-        console.log(document.getElementById("userForm").textContent)
-    };
     return (
         <Container>
-            <Row>
-                <Col>
-                    <h1>Welcome to your "To do" list!</h1>
+            <Row className="justify-content-md-center">
+                <Col sm="auto mt-5">
+                    <h1>Welcome to Nico's "To do" list!</h1>
                 </Col>
             </Row>
-            
-            <Row>
-                <Col>
-                    <Form>
-                        <Form.Group >
-                            <Form.Control id="userForm" className="mb-2 mr-sm-2" placeholder="User Name" onSubmit={() => mySubmit()} />
-                        </Form.Group>
-                    </Form>
+            <Row className="justify-content-md-center">
+                <Col sm={2} className="mt-5">
+                    <Link to="/list">
+                        <Button variant="secondary">Click me!</Button>
+                    </Link>
                 </Col>
             </Row>
-            
+
         </Container>
     );
 };
