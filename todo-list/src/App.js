@@ -1,8 +1,11 @@
+import React, { useState, useEffect } from 'react';
+import { Container, Form, Button, Row, Col } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
+
+import MyList from './components/listGroup';
+
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { useState, useEffect } from 'react';
-import MyList from './components/listGroup'
-import { Container, Form, Button } from 'react-bootstrap';
 
 const TodoList = () => {
     const [input, setInput] = useState('');
@@ -11,7 +14,7 @@ const TodoList = () => {
     // Add Items using Input    
     const addItem = event => {
         event.preventDefault();
-        let newTaskList = [...tasksList, {label: input, done: false}]
+        let newTaskList = [...tasksList, { label: input, done: false }]
         setTasksList(() => newTaskList);
         setInput('');
         updateTaskUser()
@@ -31,24 +34,24 @@ const TodoList = () => {
     }
 
     // Create user
-    const createUser =  async()=>{
+    const createUser = async () => {
         const request = await fetch('https://assets.breatheco.de/apis/fake/todos/user/nicolas',
-        {
-            method:"POST",
-            body: JSON.stringify([]),
-            headers:{"Content-Type": "application/json"}
-        })
-        
+            {
+                method: "POST",
+                body: JSON.stringify([]),
+                headers: { "Content-Type": "application/json" }
+            })
+
         const json = await request.json();
         const data = json;
-        console.log('New user response',data)
+        console.log('New user response', data)
     }
 
     // Fetch existing data
-    const fetchData = async() => {
+    const fetchData = async () => {
         const settings = {
-            method:"GET",
-            headers:{ "Content-Type":"application/json" }
+            method: "GET",
+            headers: { "Content-Type": "application/json" }
         }
 
         const request = await fetch(`https://assets.breatheco.de/apis/fake/todos/user/nicolas`, settings);
@@ -59,22 +62,22 @@ const TodoList = () => {
     }
 
     // Update tasksList    
-    const updateTaskUser = async() => {
+    const updateTaskUser = async () => {
         const settings = {
-            method:"PUT",
+            method: "PUT",
             body: JSON.stringify(tasksList),
-            headers:{ "Content-Type": "application/json" }
+            headers: { "Content-Type": "application/json" }
         }
 
         const request = await fetch('https://assets.breatheco.de/apis/fake/todos/user/nicolas', settings);
         const json = await request.json();
         const data = json;
-        console.log("update response",data);
+        console.log("update response", data);
     }
 
     // Delete all Tasks and user
     const deleteAll = async () => {
-        const request = await fetch('https://assets.breatheco.de/apis/fake/todos/user/nicolas', {method:"DELETE"})
+        const request = await fetch('https://assets.breatheco.de/apis/fake/todos/user/nicolas', { method: "DELETE" })
         const json = await request.json();
         const data = json
         createUser()
@@ -85,18 +88,28 @@ const TodoList = () => {
     useEffect(() => {
         createUser()
         fetchData()
-     }, []);
+    }, []);
 
     return (
         <Container>
-            <h1>todos</h1>
-            <span>{JSON.stringify(tasksList)}</span>
+            <Row className="justify-content-md-center">
+                <Col md={3}>
+                    <Link to="/">
+                        <h1>todos</h1>
+                    </Link>
+                </Col>
+            </Row>
             <Form onSubmit={addItem} >
                 <input className="form-control" value={input} onInput={e => setInput(e.target.value)} type="text"
-                    placeholder="What needs to be done?" autoComplete="off" autoFocus  />
+                    placeholder="What needs to be done?" autoComplete="off" autoFocus />
             </Form>
             <MyList tasksList={tasksList} setTasksList={setTasksList} removeTask={removeTask} />
-            <Button className="deleteAll" variant="secondary" onClick={() => deleteAll()}>Remove All</Button>
+            <Row>
+                <Col>
+                    <Button className="float-left m-5" variant="secondary" onClick={() => updateTaskUser()}>Save</Button>
+                    <Button className="float-right m-5" variant="secondary" onClick={() => deleteAll()}>Remove All</Button>
+                </Col>
+            </Row>
         </Container>
     )
 }
